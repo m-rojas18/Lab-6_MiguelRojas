@@ -11,6 +11,8 @@ public class Admin_usuario {
 
 
     private ArrayList<Usuario> listaUsuarios = new ArrayList();
+    private ArrayList<String> listaUsername = new ArrayList();
+    private ArrayList<String> listaPasswords = new ArrayList();
     private File archivoU = null;
     
     public Admin_usuario(String path){
@@ -33,20 +35,58 @@ public class Admin_usuario {
         this.archivoU = archivoU;
     }
 
+    public ArrayList<String> getListaUsername() {
+        return listaUsername;
+    }
+
+    public void setListaUsername(ArrayList<String> listaUsername) {
+        this.listaUsername = listaUsername;
+    }
+
+    public ArrayList<String> getListaPasswords() {
+        return listaPasswords;
+    }
+
+    public void setListaPasswords(ArrayList<String> listaPasswords) {
+        this.listaPasswords = listaPasswords;
+    }
+    
+    //Extra Mutadores
+    public void setUsername(String user){
+        this.listaUsername.add(user);
+    }
+    
+    public String getUser(int pos){
+        return listaUsername.get(pos);
+    }
+    
+    public void setPassword(String pass){
+        this.listaPasswords.add(pass);
+    }
+    
+    public String getPassword(int pos){
+        return listaPasswords.get(pos);
+    }
+
     @Override
     public String toString() {
         return "listaUsuarios=" + listaUsuarios;
-    }
-    
+    }    
     public void cargarArchivoU(){
         Scanner sc = null;
+        Scanner sc2 = null;
         listaUsuarios = new ArrayList();
+        listaUsername = new ArrayList();
+        listaPasswords = new ArrayList();
         try {
             if (archivoU.exists()) {
                 sc = new Scanner(archivoU);
                 sc.useDelimiter(";");
                 while(sc.hasNext()){
-                    listaUsuarios.add(new Usuario(sc.next(), sc.next(), sc.next(), sc.next()));
+                    Usuario u = new Usuario(sc.next(), sc.next(), sc.next(), sc.next());
+                    listaUsuarios.add(u);
+                    listaUsername.add(u.getUsername());
+                    listaPasswords.add(u.getPassword());
                 }
             } 
         } catch (Exception e) {

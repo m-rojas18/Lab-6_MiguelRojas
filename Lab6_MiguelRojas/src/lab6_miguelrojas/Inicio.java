@@ -3,17 +3,28 @@ package lab6_miguelrojas;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public class Inicio extends javax.swing.JFrame {
+public  class Inicio extends javax.swing.JFrame {
 
     public Inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
+        au.cargarArchivoU();
+        for (int i = 0; i < au.getListaUsuarios().size(); i++) {
+            System.out.println(au.getUser(i));
+        }
+
+        for (int i = 0; i < au.getListaPasswords().size(); i++) {
+            System.out.println(au.getPassword(i));
+        }
+
+        //Agregar Nombres a la lista de Chat
         if (au.getListaUsuarios().isEmpty()) {
-            //No cargar nada
+            //do nothing
         } else {
-            au.cargarArchivoU();
+            refrescarListaContactos();
         }
     }
 
@@ -39,6 +50,18 @@ public class Inicio extends javax.swing.JFrame {
         dc_fecha = new com.toedter.calendar.JDateChooser();
         jb_crearUsuario = new javax.swing.JButton();
         jd_chat = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jl_contactos = new javax.swing.JList<>();
+        jb_send = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ta_mensaje = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ta_chat = new javax.swing.JTextArea();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -58,8 +81,6 @@ public class Inicio extends javax.swing.JFrame {
         jLabel8.setText("Contraseña");
 
         jLabel9.setText("Fecha de Nacimiento");
-
-        pf_password.setText("jPasswordField1");
 
         jb_crearUsuario.setText("Crear Usuario");
         jb_crearUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -89,8 +110,8 @@ public class Inicio extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tf_nombre)
                             .addComponent(tf_usuario)
-                            .addComponent(pf_password, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                            .addComponent(dc_fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(pf_password)
+                            .addComponent(dc_fecha, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addComponent(jLabel5)))
@@ -138,15 +159,114 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(51, 255, 153));
+        jPanel3.setForeground(new java.awt.Color(0, 255, 204));
+
+        jLabel10.setText("Contactos");
+
+        jScrollPane1.setViewportView(jl_contactos);
+
+        jb_send.setText("Send");
+        jb_send.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_sendMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jb_send, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
+                .addComponent(jb_send, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 102));
+
+        ta_mensaje.setColumns(20);
+        ta_mensaje.setRows(5);
+        jScrollPane2.setViewportView(ta_mensaje);
+
+        ta_chat.setColumns(20);
+        ta_chat.setRows(5);
+        jScrollPane3.setViewportView(ta_chat);
+
+        jLabel11.setText("Chat");
+
+        jLabel12.setText("Escribir Mensaje");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+
         javax.swing.GroupLayout jd_chatLayout = new javax.swing.GroupLayout(jd_chat.getContentPane());
         jd_chat.getContentPane().setLayout(jd_chatLayout);
         jd_chatLayout.setHorizontalGroup(
             jd_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_chatLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jd_chatLayout.setVerticalGroup(
             jd_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_chatLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jd_chatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,6 +285,11 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         jb_login.setText("Iniciar Sesion");
+        jb_login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_loginMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -289,10 +414,10 @@ public class Inicio extends javax.swing.JFrame {
         }
 
         //Verificar que el usuario sea unico
-        if (listaUsername.isEmpty()) {
+        if (au.getListaUsername().isEmpty()) {
             //do nothing
         } else {
-            if (listaUsername.contains(user)) {
+            if (au.getListaUsername().contains(user)) {
                 JOptionPane.showMessageDialog(jd_crearUsuario, "Debe cambiar su nombre de usuario");
                 crear = false;
                 tf_usuario.setText("");
@@ -302,8 +427,9 @@ public class Inicio extends javax.swing.JFrame {
         if (crear) {
             try {
                 Usuario u = new Usuario(nombre, user, password, fecha_nacimiento);
-                listaUsername.add(user);
-                listaPasswords.add(password);
+
+                au.setUsername(user);//Agregar a Lista de Usuario
+                au.setPassword(password);//Agregar a Lista de Contraseñas
                 au.getListaUsuarios().add(u);
                 au.escribirArchivoU();
                 JOptionPane.showMessageDialog(jd_crearUsuario, "Usuario creado con Exito!!");
@@ -317,6 +443,67 @@ public class Inicio extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jb_crearUsuarioMouseClicked
+
+    private void jb_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_loginMouseClicked
+        // TODO add your handling code here:
+        String user_Ingresar = null,
+                pass_Ingresar = null;
+
+        boolean iniciar = true;
+        if (au.getListaUsuarios().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No existe ningun usuario");
+            iniciar = false;
+        }
+
+        if (tf_username_Ingresar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe Ingresar un nombre de usuario");
+            iniciar = false;
+        } else {
+            user_Ingresar = tf_username_Ingresar.getText();
+        }
+
+        if (pf_password_Ingresar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe Ingresar una contraseña");
+            iniciar = false;
+        } else {
+            pass_Ingresar = pf_password_Ingresar.getText();
+        }
+
+        if (au.getListaUsername().contains(user_Ingresar)) {
+            //do nothin
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario incorrecto o no existe");
+            iniciar = false;
+            tf_username_Ingresar.setText("");
+        }
+        if (au.getListaPasswords().contains(pass_Ingresar)) {
+            //do nothing
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta o no Existe");
+            iniciar = false;
+            pf_password_Ingresar.setText("");
+        }
+
+        if (iniciar) {
+            try {
+                JOptionPane.showMessageDialog(this, "Ingreso Exitosamente");
+                jd_chat.setModal(true);
+                jd_chat.pack();
+                jd_chat.setLocationRelativeTo(this);
+                jd_chat.setVisible(true);
+                this.setVisible(false);
+            } catch (Exception e) {
+            }
+
+        }
+
+    }//GEN-LAST:event_jb_loginMouseClicked
+
+    private void jb_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_sendMouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jb_sendMouseClicked
 
     /**
      * @param args the command line arguments
@@ -356,6 +543,9 @@ public class Inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser dc_fecha;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -366,19 +556,35 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jb_crearC;
     private javax.swing.JButton jb_crearUsuario;
     private javax.swing.JButton jb_login;
+    private javax.swing.JButton jb_send;
     private javax.swing.JDialog jd_chat;
     private javax.swing.JDialog jd_crearUsuario;
+    private javax.swing.JList<String> jl_contactos;
     private javax.swing.JPasswordField pf_password;
     private javax.swing.JPasswordField pf_password_Ingresar;
+    private javax.swing.JTextArea ta_chat;
+    private javax.swing.JTextArea ta_mensaje;
     private javax.swing.JTextField tf_nombre;
     private javax.swing.JTextField tf_username_Ingresar;
     private javax.swing.JTextField tf_usuario;
     // End of variables declaration//GEN-END:variables
-
-    ArrayList<String> listaUsername = new ArrayList();
-    ArrayList<String> listaPasswords = new ArrayList();
     Admin_usuario au = new Admin_usuario("./Users");
+
+    public void refrescarListaContactos() {
+
+        DefaultListModel model = new DefaultListModel();
+        
+        for (Usuario lu : au.getListaUsuarios()) {
+            model.addElement(lu);
+        }
+        jl_contactos.setModel(model);
+    }
 }
