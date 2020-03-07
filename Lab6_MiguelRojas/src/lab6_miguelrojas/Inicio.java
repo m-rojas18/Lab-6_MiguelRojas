@@ -6,8 +6,8 @@ import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public  class Inicio extends javax.swing.JFrame {
-
+public class Inicio extends javax.swing.JFrame {
+    
     public Inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -15,7 +15,7 @@ public  class Inicio extends javax.swing.JFrame {
         for (int i = 0; i < au.getListaUsuarios().size(); i++) {
             System.out.println(au.getUser(i));
         }
-
+        
         for (int i = 0; i < au.getListaPasswords().size(); i++) {
             System.out.println(au.getPassword(i));
         }
@@ -26,6 +26,9 @@ public  class Inicio extends javax.swing.JFrame {
         } else {
             refrescarListaContactos();
         }
+        
+        /* int ascii = 'a';
+        System.out.println(ascii); */
     }
 
     /**
@@ -404,11 +407,11 @@ public  class Inicio extends javax.swing.JFrame {
         }
         //Fecha
         fecha = dc_fecha.getDate();
-
+        
         if (fecha == null) {
             JOptionPane.showMessageDialog(jd_crearUsuario, "Debe elegir una fecha de nacimiento");
             crear = false;
-
+            
         } else {
             fecha_nacimiento = sd.format(fecha);
         }
@@ -427,7 +430,7 @@ public  class Inicio extends javax.swing.JFrame {
         if (crear) {
             try {
                 Usuario u = new Usuario(nombre, user, password, fecha_nacimiento);
-
+                
                 au.setUsername(user);//Agregar a Lista de Usuario
                 au.setPassword(password);//Agregar a Lista de Contraseñas
                 au.getListaUsuarios().add(u);
@@ -438,6 +441,7 @@ public  class Inicio extends javax.swing.JFrame {
                 pf_password.setText("");
                 dc_fecha.setDate(null);
                 jd_crearUsuario.dispose();
+                refrescarListaContactos();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(jd_crearUsuario, "Ocurrio un Error desconocido");
             }
@@ -448,27 +452,27 @@ public  class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         String user_Ingresar = null,
                 pass_Ingresar = null;
-
+        
         boolean iniciar = true;
         if (au.getListaUsuarios().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No existe ningun usuario");
             iniciar = false;
         }
-
+        
         if (tf_username_Ingresar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe Ingresar un nombre de usuario");
             iniciar = false;
         } else {
             user_Ingresar = tf_username_Ingresar.getText();
         }
-
+        
         if (pf_password_Ingresar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe Ingresar una contraseña");
             iniciar = false;
         } else {
             pass_Ingresar = pf_password_Ingresar.getText();
         }
-
+        
         if (au.getListaUsername().contains(user_Ingresar)) {
             //do nothin
         } else {
@@ -483,7 +487,7 @@ public  class Inicio extends javax.swing.JFrame {
             iniciar = false;
             pf_password_Ingresar.setText("");
         }
-
+        
         if (iniciar) {
             try {
                 JOptionPane.showMessageDialog(this, "Ingreso Exitosamente");
@@ -494,15 +498,45 @@ public  class Inicio extends javax.swing.JFrame {
                 this.setVisible(false);
             } catch (Exception e) {
             }
-
+            
         }
 
     }//GEN-LAST:event_jb_loginMouseClicked
 
     private void jb_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_sendMouseClicked
         // TODO add your handling code here:
+        char num = ' ';
         
-        
+        if (ta_mensaje.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(jd_chat, "Debe Escribir algo ");
+        } else {
+            num = ta_mensaje.getText().charAt(ta_mensaje.getText().length() - 1);
+            
+        }
+        try {
+
+            //Cifra 1
+            if (num == '1') {
+            }
+            //Cifra 2
+            if (num == '2') {
+                
+            }
+            //Cifra 3
+            if (num == '3') {
+               
+                String text_return =  cifra3();
+                ta_chat.setText(tf_username_Ingresar.getText() +":" + ta_mensaje.getText() +"\n"+ "Maquina: " + text_return);
+                ta_mensaje.setText("");
+                
+            }
+            //Cifra 4
+            if (num == '4') {
+                
+            }
+            
+        } catch (NullPointerException e) {
+        }
     }//GEN-LAST:event_jb_sendMouseClicked
 
     /**
@@ -577,14 +611,193 @@ public  class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextField tf_usuario;
     // End of variables declaration//GEN-END:variables
     Admin_usuario au = new Admin_usuario("./Users");
-
+    
     public void refrescarListaContactos() {
-
+        
         DefaultListModel model = new DefaultListModel();
         
         for (Usuario lu : au.getListaUsuarios()) {
             model.addElement(lu);
         }
         jl_contactos.setModel(model);
+    }
+    
+    public void cifra1() {
+        
+    }
+    
+    public void cifra2() {
+        
+    }
+    
+    public String cifra3() {
+        
+        String oracion = ta_mensaje.getText().substring(0, ta_mensaje.getText().length() - 2);
+        System.out.println("---\n" + oracion);
+        for (int i = 0; i < oracion.length(); i++) {
+            char letra = oracion.charAt(i);
+            if (letra == 'a') {
+                oracion = oracion.replace('a','z');
+            } else if (letra == 'A') {
+                oracion = oracion.replace('A', 'Z');
+            }
+            //B
+            else if (letra == 'b') {
+                 oracion = oracion.replace('b', 'y');
+            }
+            else if (letra == 'B') {
+                 oracion = oracion.replace('B', 'Y');
+            }
+            //C
+            else if (letra == 'c') {
+                 oracion = oracion.replace('c', 'x');
+            }else if (letra == 'C') {
+                 oracion = oracion.replace('C', 'X');
+            }
+            //D
+            else if (letra == 'd') {
+                 oracion = oracion.replace('d', 'w');
+            }else if (letra == 'D') {
+                 oracion = oracion.replace('D', 'W');
+            }
+            //E
+            else if (letra == 'e') {
+                 oracion = oracion.replace('e', 'v');
+            }else if (letra == 'E') {
+                 oracion = oracion.replace('E', 'V');
+            }
+            //F
+            else if (letra == 'f') {
+                 oracion = oracion.replace('f', 'u');
+            }else if (letra == 'F') {
+                 oracion = oracion.replace('F', 'U');
+            }
+            //G
+            else if (letra == 'g') {
+                 oracion = oracion.replace('g', 't');
+            }else if (letra == 'G') {
+                 oracion = oracion.replace('G', 'T');
+            }
+            //H
+            else if (letra == 'h') {
+                 oracion = oracion.replace('h', 's');
+            }else if (letra == 'H') {
+                 oracion = oracion.replace('H', 'S');
+            }
+            //I
+            else if (letra == 'i') {
+                 oracion = oracion.replace('i', 'r');
+            }else if (letra == 'I') {
+                 oracion = oracion.replace('I', 'R');
+            }
+            //J
+            else if (letra == 'j') {
+                 oracion = oracion.replace('j', 'q');
+            }else if (letra == 'J') {
+                 oracion = oracion.replace('J', 'Q');
+            }
+            //K
+            else if (letra == 'k') {
+                 oracion = oracion.replace('k', 'p');
+            }else if (letra == 'K') {
+                 oracion = oracion.replace('K', 'P');
+            }
+            //L
+            else if (letra == 'l') {
+                 oracion = oracion.replace('l', 'o');
+            }else if (letra == 'L') {
+                 oracion = oracion.replace('L', 'O');
+            }
+            //M
+            else if (letra == 'm') {
+                 oracion = oracion.replace('m', 'n');
+            }else if (letra == 'M') {
+                 oracion = oracion.replace('M', 'N');
+            }
+            //N
+            else if (letra == 'n') {
+                 oracion = oracion.replace('n', 'm');
+            }else if (letra == 'N') {
+                 oracion = oracion.replace('N', 'M');
+            }
+            //O
+            else if (letra == 'o') {
+                 oracion = oracion.replace('o', 'l');
+            }else if (letra == 'O') {
+                 oracion = oracion.replace('O', 'L');
+            }
+            //P
+            else if (letra == 'p') {
+                 oracion = oracion.replace('p', 'k');
+            }else if (letra == 'p') {
+                 oracion = oracion.replace('P', 'K');
+            }
+            //Q
+            else if (letra == 'q') {
+                 oracion = oracion.replace('q', 'j');
+            }else if (letra == 'Q') {
+                 oracion = oracion.replace('Q', 'J');
+            }
+            //R
+            else if (letra == 'r') {
+                 oracion = oracion.replace('r', 'i');
+            }else if (letra == 'R') {
+                 oracion = oracion.replace('R', 'I');
+            }
+            //S
+            else if (letra == 's') {
+                 oracion = oracion.replace('s', 'h');
+            }else if (letra == 'S') {
+                 oracion = oracion.replace('S', 'H');
+            }
+            //T
+            else if (letra == 't') {
+                 oracion = oracion.replace('t', 'g');
+            }else if (letra == 'T') {
+                 oracion = oracion.replace('T', 'G');
+            }
+            //U
+            else if (letra == 'u') {
+                 oracion = oracion.replace('u', 'f');
+            }else if (letra == 'U') {
+                 oracion = oracion.replace('U', 'F');
+            }
+            //V
+            else if (letra == 'v') {
+                 oracion = oracion.replace('v', 'e');
+            }else if (letra == 'V') {
+                 oracion = oracion.replace('V', 'E');
+            }
+            //W
+            else if (letra == 'w') {
+                 oracion = oracion.replace('w', 'd');
+            }else if (letra == 'W') {
+                 oracion = oracion.replace('W', 'D');
+            }
+            //X
+            else if (letra == 'x') {
+                 oracion = oracion.replace('x', 'c');
+            }else if (letra == 'X') {
+                 oracion = oracion.replace('X', 'C');
+            }
+            //Y
+            else if (letra == 'y') {
+                 oracion = oracion.replace('y', 'b');
+            }else if (letra == 'Y') {
+                 oracion = oracion.replace('Y', 'B');
+            }
+            //Z
+            else if (letra == 'z') {
+                 oracion = oracion.replace('z', 'a');
+            }else if (letra == 'Z') {
+                 oracion = oracion.replace('z', 'A');
+            }
+        }
+        System.out.println("---\n" + oracion);
+        return oracion;
+    }
+    
+    public void cifra4() {
+        
     }
 }
