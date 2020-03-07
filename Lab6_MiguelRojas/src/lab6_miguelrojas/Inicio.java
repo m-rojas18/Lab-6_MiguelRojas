@@ -1,8 +1,12 @@
 package lab6_miguelrojas;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -506,7 +510,7 @@ public class Inicio extends javax.swing.JFrame {
     private void jb_sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_sendMouseClicked
         // TODO add your handling code here:
         char num = ' ';
-        
+        String oracion = ta_mensaje.getText().substring(0, ta_mensaje.getText().length() - 2);
         if (ta_mensaje.getText().isEmpty()) {
             JOptionPane.showMessageDialog(jd_chat, "Debe Escribir algo ");
         } else {
@@ -517,25 +521,35 @@ public class Inicio extends javax.swing.JFrame {
 
             //Cifra 1
             if (num == '1') {
+                System.out.println("No lo termine");
             }
             //Cifra 2
             if (num == '2') {
-                
+                String text_return = cifra2();
+                String texto = "";
+                texto +=tf_username_Ingresar.getText() +":" + oracion +"\n"+ "Maquina: " + text_return;
+                ta_chat.setText(texto);
+                ta_mensaje.setText("");
             }
             //Cifra 3
             if (num == '3') {
                
                 String text_return =  cifra3();
-                ta_chat.setText(tf_username_Ingresar.getText() +":" + ta_mensaje.getText() +"\n"+ "Maquina: " + text_return);
+                String mensajes = "";
+                mensajes += tf_username_Ingresar.getText() +":" + oracion +"\n"+ "Maquina: " + text_return;
+                ta_chat.setText(mensajes);
                 ta_mensaje.setText("");
                 
             }
             //Cifra 4
             if (num == '4') {
+                System.out.println("No lo termine");
                 
             }
             
         } catch (NullPointerException e) {
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jb_sendMouseClicked
 
@@ -623,11 +637,27 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     public void cifra1() {
+        String oracion = ta_mensaje.getText().substring(0, ta_mensaje.getText().length() - 2);
+        char espacio = ' ';
+        for (int i = 0; i < oracion.length(); i++) {
+            
+                
+            
+        }
+        
         
     }
     
-    public void cifra2() {
-        
+    public String cifra2() throws UnsupportedEncodingException {
+        String oracion = ta_mensaje.getText().substring(0, ta_mensaje.getText().length() - 2);
+        int length = oracion.length();
+        String temp = "";
+        for (int i = 0; i < length; i++) {
+            char letra = oracion.charAt(i);
+            int ascii =(int) letra;
+            temp += ascii;
+        }
+        return temp;
     }
     
     public String cifra3() {
