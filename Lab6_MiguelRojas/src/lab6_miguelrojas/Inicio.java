@@ -16,13 +16,6 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         au.cargarArchivoU();
-        for (int i = 0; i < au.getListaUsuarios().size(); i++) {
-            System.out.println(au.getUser(i));
-        }
-        
-        for (int i = 0; i < au.getListaPasswords().size(); i++) {
-            System.out.println(au.getPassword(i));
-        }
 
         //Agregar Nombres a la lista de Chat
         if (au.getListaUsuarios().isEmpty()) {
